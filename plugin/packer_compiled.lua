@@ -124,6 +124,11 @@ _G.packer_plugins = {
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/julia-vim",
     url = "https://github.com/JuliaEditorSupport/julia-vim"
   },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",
+    url = "https://github.com/ray-x/lsp_signature.nvim"
+  },
   ["neovim-qt"] = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/neovim-qt",
