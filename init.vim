@@ -5,6 +5,7 @@ set undodir
 
 let mapleader = " " " map leader to Space
 
+"
 " for additional stuff in lua
 lua require('config')
 lua require('nvim-cmp_prefs')
@@ -67,8 +68,15 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
  "and use CLIPBOARD "+ for cut/copy/paste operations
  set clipboard=unnamedplus  "use "+ for yank/delete/change/put operations
 
+
 "Set GUI and terminal appearance
- if has('g:GuiLoaded')
+set guifont=Source\ Code\ Pro:h14
+let g:neovide_scale_factor = 1.0
+"Blur
+let g:neovide_floating_blur_amount_x = 2.0
+let g:neovide_floating_blur_amount_y = 2.0
+
+ if exists("g:neovide")
    colorscheme one "     GUI colorscheme
    set background=dark         "possible values for solarized: light/dark
    set guifont=Monospace\ 12    "to set interactively type 'set guifont=*' in gvim
@@ -290,4 +298,5 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
     endfunction
     autocmd Filetype tex :autocmd InsertCharPre <buffer> call OpenCompletion()
  endif
+
 

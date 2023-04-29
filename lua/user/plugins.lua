@@ -50,7 +50,9 @@ return packer.startup(function(use)
   use 'sjl/gundo.vim'                      -- (:h Gundo-contents)
 -- file explorer
 --
-  use 'preservim/nerdtree'                 -- (:h NERDTree-contents)
+--  use 'preservim/nerdtree'                 -- (:h NERDTree-contents)
+  use 'nvim-tree/nvim-tree.lua'                 -- (:h NERDTree-contents)
+  use 'nvim-tree/nvim-web-devicons'                 -- (:h NERDTree-contents)
   use 'Xuyuanp/nerdtree-git-plugin'
 --  use 'SirVer/ultisnips'                 -- (:h UltiSnips, UltiSnips-basic-syntax)
 --
@@ -61,6 +63,9 @@ return packer.startup(function(use)
 -- julia packages
   use 'JuliaEditorSupport/julia-vim'
   use 'jpalardy/vim-slime'
+
+-- c++ stuff
+  use 'm-pilia/vim-ccls'
 
 -- lsp autocompletion stuff
   use "rafamadriz/friendly-snippets"
@@ -79,6 +84,8 @@ return packer.startup(function(use)
 -- vsnip 
   use 'hrsh7th/vim-vsnip'
   use 'hrsh7th/vim-vsnip-integ'
+-- intendation 
+  use "lukas-reineke/indent-blankline.nvim"
 
 
 -- gui

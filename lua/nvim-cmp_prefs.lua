@@ -64,7 +64,7 @@ local cmp = require'cmp'
   --
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
   --
-  require('lspconfig')['pyright'].setup {
+  require('lspconfig')['pylsp'].setup {
       settings = {
           pylsp = { configurationSources = {"flake8"},
               plugins = { jedi_completion = {
@@ -74,3 +74,7 @@ local cmp = require'cmp'
       on_attach = on_attach,
       flags = lsp_flags,
   }
+  require('lspconfig').r_language_server.setup{}
+  require('lspconfig').clangd.setup{}
+
+ 

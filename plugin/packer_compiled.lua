@@ -114,6 +114,11 @@ _G.packer_plugins = {
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/gundo.vim",
     url = "https://github.com/sjl/gundo.vim"
   },
+  ["indent-blankline.nvim"] = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
+    url = "https://github.com/lukas-reineke/indent-blankline.nvim"
+  },
   ["json-formatter.vim"] = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/json-formatter.vim",
@@ -134,11 +139,6 @@ _G.packer_plugins = {
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/neovim-qt",
     url = "https://github.com/equalsraf/neovim-qt"
   },
-  nerdtree = {
-    loaded = true,
-    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nerdtree",
-    url = "https://github.com/preservim/nerdtree"
-  },
   ["nerdtree-git-plugin"] = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
@@ -154,6 +154,16 @@ _G.packer_plugins = {
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nvim-lspconfig",
     url = "https://github.com/neovim/nvim-lspconfig"
   },
+  ["nvim-tree.lua"] = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nvim-tree.lua",
+    url = "https://github.com/nvim-tree/nvim-tree.lua"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
+  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -168,6 +178,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/popup.nvim",
     url = "https://github.com/nvim-lua/popup.nvim"
+  },
+  ["vim-ccls"] = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/vim-ccls",
+    url = "https://github.com/m-pilia/vim-ccls"
   },
   ["vim-colors-solarized"] = {
     loaded = true,

@@ -11,3 +11,4 @@ local signature_config = {
 }
 
 require("lsp_signature").setup(signature_config)
+
