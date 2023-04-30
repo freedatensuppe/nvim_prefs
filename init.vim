@@ -5,7 +5,6 @@ set undodir
 
 let mapleader = " " " map leader to Space
 
-"
 " for additional stuff in lua
 lua require('config')
 lua require('nvim-cmp_prefs')
@@ -19,19 +18,8 @@ lua require("user.plugins")
   if has("python3") | let g:gundo_prefer_python3 = 1 | endif
   nnoremap <F4> :GundoToggle<CR>
   let g:python3_host_prog = '/usr/bin/python3'
- "Map :NERDTreeToggle to <leader>N
-  noremap <leader>N :NERDTreeToggleVCS<CR>
- "Map UltiSnips completion to <C-j> (default is <Tab>)
-"  let g:UltiSnipsExpandTrigger       = '<C-j>'
-"  let g:UltiSnipsJumpForwardTrigger  = '<C-j>'
-"  let g:UltiSnipsJumpBackwardTrigger = '<C-k>'
-"  let g:UltiSnipsSnippetDir="~/.config/nvim/ultisnips"
-"  let g:UltiSnipsSnippetDirectories= ['ultisnips']
- "latex forward search with evince by <leader>f
-  nnoremap <leader>f :call SVED_Sync()<CR>
-
-" keybindings for: https://github.com/hrsh7th/vim-vsnip
-" NOTE: You can use other key to expand snippet.
+" map leader+N to open NvimTreeOpen
+  noremap <leader>N :NvimTreeOpen<CR>
 
 " Expand
 imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
@@ -77,27 +65,13 @@ let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
 
  if exists("g:neovide")
+   autocmd VimEnter * :NvimTreeOpen<CR> "open NvimTree on startup
    colorscheme one "     GUI colorscheme
    set background=dark         "possible values for solarized: light/dark
    set guifont=Monospace\ 12    "to set interactively type 'set guifont=*' in gvim
  else
    colorscheme elflord          "terminal colorscheme
  endif
-
-""There are three types of options in Vim:
- "{{{
- "All of their values can be queried with "set <name>?"
-""Boolean options:
- "         set with "<name>"
- "       unset with "no<name>"
- "      toggle with "<name>!"
-""String and numeric options:
- "         set with "<name>=<value>"
-""Array options:
- "         set with "<name>=<value>"
- "   add value with "<name>+=<value>"
- "remove value with "<name>-=<value>"
- "}}}
 
  "Bools
   set wrap           "wrap line at end of window
@@ -133,9 +107,6 @@ let g:neovide_floating_blur_amount_y = 2.0
   set listchars+=extends:⟩
   set listchars+=precedes:⟨
   "set listchars+=eol:↲
-
- "Don't flush terminal after closing vim (:h terminal-info, terminal-options)
-  set t_ti= t_te=
 
  "Define how automatic formatting is done (:h 'formatoptions', fo-table)
   set formatoptions=tcrqj
@@ -183,7 +154,6 @@ let g:neovide_floating_blur_amount_y = 2.0
 "  let &t_SI = "\<Esc>[5 q" "SI = INSERT mode
 "  let &t_SR = "\<Esc>[4 q" "SR = REPLACE mode
 "  let &t_EI = "\<Esc>[1 q" "EI = NORMAL mode (ELSE)
-
 
 ""Key-maps and key-remaps (:h key-mapping, map-overview) edit vimrc
  "by hitting "<leader>e", "<leader>v" (vsplit) or "<leader>t" (tab)
@@ -251,17 +221,16 @@ let g:neovide_floating_blur_amount_y = 2.0
   inoremap <C-End>   <Esc>g$a
  "}}}
 
- "move between split-windows by hitting "alt+{arrow-keys}"
- "(unfortunately alt+{h,j,k,l} don't get sent to vim properly)
+ "move between split-windows by hitting alt+{h,j,k,l}
  "{{{
-   noremap <M-Left>       <C-w>h
-   noremap <M-Down>       <C-w>j
-   noremap <M-Up>         <C-w>k
-   noremap <M-Right>      <C-w>l
-  inoremap <M-Left>  <Esc><C-w>ha
-  inoremap <M-Down>  <Esc><C-w>ja
-  inoremap <M-Up>    <Esc><C-w>ka
-  inoremap <M-Right> <Esc><C-w>la
+   noremap <M-h>       <C-w>h
+   noremap <M-j>       <C-w>j
+   noremap <M-k>       <C-w>k
+   noremap <M-l>       <C-w>l
+  inoremap <M-h>       <Esc><C-w>ha
+  inoremap <M-j>       <Esc><C-w>ja
+  inoremap <M-k>       <Esc><C-w>ka
+  inoremap <M-l>       <Esc><C-w>la
  "}}}
 
 
@@ -300,3 +269,7 @@ let g:neovide_floating_blur_amount_y = 2.0
  endif
 
 
+" setup settings for zathura latex backwards search
+let g:vimtex_view_method = 'zathura'
+let g:latex_view_general_viewer = 'zathura'
+let g:vimtex_compiler_progname = 'latexmk'

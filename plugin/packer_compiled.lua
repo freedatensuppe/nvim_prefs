@@ -139,11 +139,6 @@ _G.packer_plugins = {
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/neovim-qt",
     url = "https://github.com/equalsraf/neovim-qt"
   },
-  ["nerdtree-git-plugin"] = {
-    loaded = true,
-    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nerdtree-git-plugin",
-    url = "https://github.com/Xuyuanp/nerdtree-git-plugin"
-  },
   ["nvim-cmp"] = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/nvim-cmp",
@@ -223,6 +218,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/vim-vsnip-integ",
     url = "https://github.com/hrsh7th/vim-vsnip-integ"
+  },
+  vimtex = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/vimtex",
+    url = "https://github.com/lervag/vimtex"
   }
 }
 

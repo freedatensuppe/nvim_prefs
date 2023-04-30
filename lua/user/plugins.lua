@@ -53,7 +53,7 @@ return packer.startup(function(use)
 --  use 'preservim/nerdtree'                 -- (:h NERDTree-contents)
   use 'nvim-tree/nvim-tree.lua'                 -- (:h NERDTree-contents)
   use 'nvim-tree/nvim-web-devicons'                 -- (:h NERDTree-contents)
-  use 'Xuyuanp/nerdtree-git-plugin'
+--  use 'Xuyuanp/nerdtree-git-plugin'
 --  use 'SirVer/ultisnips'                 -- (:h UltiSnips, UltiSnips-basic-syntax)
 --
   use 'adelarsq/vim-matchit'
@@ -87,6 +87,8 @@ return packer.startup(function(use)
 -- intendation 
   use "lukas-reineke/indent-blankline.nvim"
 
+-- latex plugin
+  use 'lervag/vimtex'
 
 -- gui
   use 'equalsraf/neovim-qt'

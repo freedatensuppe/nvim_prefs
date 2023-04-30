@@ -1,3 +1,10 @@
+
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+require("nvim-tree").setup()
+
+
 local signature_config = {
   log_path = vim.fn.expand("$HOME") .. "/tmp/sig.log",
   debug = true,
@@ -11,4 +18,5 @@ local signature_config = {
 }
 
 require("lsp_signature").setup(signature_config)
+
 
