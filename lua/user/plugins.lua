@@ -92,7 +92,8 @@ return packer.startup(function(use)
 
 -- gui
   use 'equalsraf/neovim-qt'
-
+-- bottom status bar 
+ use 'itchyny/lightline.vim'
 
 
   -- Automatically set up your configuration after cloning packer.nvim

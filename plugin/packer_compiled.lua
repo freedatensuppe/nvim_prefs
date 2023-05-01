@@ -129,6 +129,11 @@ _G.packer_plugins = {
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/julia-vim",
     url = "https://github.com/JuliaEditorSupport/julia-vim"
   },
+  ["lightline.vim"] = {
+    loaded = true,
+    path = "/home/serafin/.local/share/nvim/site/pack/packer/start/lightline.vim",
+    url = "https://github.com/itchyny/lightline.vim"
+  },
   ["lsp_signature.nvim"] = {
     loaded = true,
     path = "/home/serafin/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim",

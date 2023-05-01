@@ -2,6 +2,7 @@
 set number
 set undofile
 set undodir
+set nocompatible
 
 let mapleader = " " " map leader to Space
 
@@ -19,7 +20,7 @@ lua require("user.plugins")
   nnoremap <F4> :GundoToggle<CR>
   let g:python3_host_prog = '/usr/bin/python3'
 " map leader+N to open NvimTreeOpen
-  noremap <leader>N :NvimTreeOpen<CR>
+  noremap <leader>N :NvimTreeToggle<CR>
 
 " Expand
 imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
@@ -60,6 +61,14 @@ let g:vsnip_filetypes.typescriptreact = ['typescript']
 "Set GUI and terminal appearance
 set guifont=Source\ Code\ Pro:h14
 let g:neovide_scale_factor = 1.0
+" cursor settings
+let g:neovide_cursor_vfx_mode = "railgun"
+let g:neovide_cursor_vfx_mode = "ripple"
+" padding = border distance
+let g:neovide_padding_top = 10
+let g:neovide_padding_bottom = 10
+let g:neovide_padding_right = 10
+let g:neovide_padding_left = 10
 "Blur
 let g:neovide_floating_blur_amount_x = 2.0
 let g:neovide_floating_blur_amount_y = 2.0
@@ -81,6 +90,8 @@ let g:neovide_floating_blur_amount_y = 2.0
   set showcmd        "display incomplete commands (bottom right)
   set hidden         "don't show an error message when switching from a modified buffer
   set wildmenu       "displays auto-completed command list on pressing wildchar (i.e. tab)
+  set wildmode=list:longest,full
+  set wildoptions-=pum
  "set wildignorecase "case insensitive completion in wildmenu
   set visualbell     "flash the buffer when encountering an error (e.g. invalid movement)
 
@@ -117,7 +128,7 @@ let g:neovide_floating_blur_amount_y = 2.0
 
  "Spell checking (:h spell)
  "Enable spell checking in GUI-Mode
-  if has("gui_running") | set spell | else | set nospell | endif
+  if has("g:neovide") | set spell | else | set nospell | endif
  "Set spell files and accepted languages (:h spell-quickstart)
   set spelllang=en_gb,de_at
   set spellfile=~/.vim/spell/en.utf-8.add,~/.vim/spell/de.utf-8.add
@@ -273,3 +284,25 @@ let g:neovide_floating_blur_amount_y = 2.0
 let g:vimtex_view_method = 'zathura'
 let g:latex_view_general_viewer = 'zathura'
 let g:vimtex_compiler_progname = 'latexmk'
+
+let g:lightline = {
+      \ 'colorscheme': 'one',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'filename' ] ],
+      \   'right': [ [ 'lineinfo' ],
+      \              [ 'percent' ],
+      \              [ 'fileformat', 'fileencoding', 'filetype', 'charvaluehex' ] ]
+      \ },
+      \ 'component_function': {
+      \   'filename': 'LightlineFilename',
+      \ },
+      \ }
+
+function! LightlineFilename()
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  return filename . modified
+endfunction
+
+
