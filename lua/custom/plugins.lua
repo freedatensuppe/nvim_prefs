@@ -1,4 +1,9 @@
 local plugins = {
+
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
   {
     "lervag/vimtex",
      config = function()
