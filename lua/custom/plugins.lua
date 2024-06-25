@@ -31,6 +31,7 @@ local plugins = {
       end
     end
   },
+  { "nvim-neotest/nvim-nio" },
   {
     "jay-babu/mason-nvim-dap.nvim",
     event = "VeryLazy",

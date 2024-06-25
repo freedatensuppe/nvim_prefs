@@ -21,3 +21,8 @@ vim.opt.rtp:prepend(lazypath)
 require "plugins"
 
 vim.wo.relativenumber = true
+
+vim.api.nvim_create_autocmd('Filetype', {
+  pattern = {'tex'},
+  command = 'set spell spelllang=en_gb' }
+)
