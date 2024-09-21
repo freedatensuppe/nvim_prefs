@@ -1,6 +1,13 @@
 local plugins = {
 
   {
+    "mfussenegger/nvim-lint",
+    event = "VeryLazy",
+    config = function ()
+      require "custom.configs.lint"
+    end
+  },
+  {
     "christoomey/vim-tmux-navigator",
     lazy = false,
   },
@@ -73,6 +80,9 @@ local plugins = {
         "clangd",
         "clang-format",
         "codelldb",
+        "typescript-language-server",
+        "eslint-lsp",
+        "prettier"
       }
     }
   }
