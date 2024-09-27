@@ -28,12 +28,16 @@ lspconfig.pyright.setup {
   capabilities = capabilities,
 }
 
+
+-- npm install --save-dev @types/node; needed for eslint to work properly
 lspconfig.ts_ls.setup {
-  on_attach = on_attach,
+  on_attach = function (client, bufnr)
+    on_attach(client, bufnr)
+  end,
   capabilities = capabilities,
   init_options = {
     preferences = {
-      disableSuggestions = true
+      disableSuggestions = false
     }
   }
 }

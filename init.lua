@@ -1,5 +1,7 @@
 require "core"
 
+vim.o.termguicolors = true
+
 local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
 
 if custom_init_path then
@@ -26,3 +28,6 @@ vim.api.nvim_create_autocmd('Filetype', {
   pattern = {'tex'},
   command = 'set spell spelllang=en_gb' }
 )
+-- init.lua
+local neogit = require('neogit')
+neogit.setup {}
