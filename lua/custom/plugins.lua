@@ -80,9 +80,10 @@ local plugins = {
         "clangd",
         "clang-format",
         "codelldb",
-        "typescript-language-server",
         "eslint-lsp",
-        "prettier"
+        "prettier",
+        "pyright",
+        "typescript-language-server",
       }
     }
   },
