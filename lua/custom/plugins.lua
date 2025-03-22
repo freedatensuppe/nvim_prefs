@@ -100,6 +100,10 @@ local plugins = {
     },
     config = true
   },
+  {
+    'stevearc/conform.nvim',
+    opts = {},
+  },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
 }
 
