@@ -1,67 +1,72 @@
-dofile(vim.g.base46_cache .. "lsp")
-require "nvchad.lsp"
+local base = require "plugins.configs.lspconfig"
+local on_attach = base.on_attach
+local capabilities = base.capabilities
 
-local M = {}
-local utils = require "core.utils"
+local lspconfig = require "lspconfig"
 
--- export on_attach & capabilities for custom lspconfigs
+lspconfig.clangd.setup {
+  on_attach = function(client, bufnr)
+    --    client.server_capabilities.signatureHelpProvider = false
+    on_attach(client, bufnr)
+  end,
 
-M.on_attach = function(client, bufnr)
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
-
-  utils.load_mappings("lspconfig", { buffer = bufnr })
-
-  if client.server_capabilities.signatureHelpProvider then
-    require("nvchad.signature").setup(client)
-  end
-
-  if not utils.load_config().ui.lsp_semantic_tokens and client.supports_method "textDocument/semanticTokens" then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
-end
-
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-
-M.capabilities.textDocument.completion.completionItem = {
-  documentationFormat = { "markdown", "plaintext" },
-  snippetSupport = true,
-  preselectSupport = true,
-  insertReplaceSupport = true,
-  labelDetailsSupport = true,
-  deprecatedSupport = true,
-  commitCharactersSupport = true,
-  tagSupport = { valueSet = { 1 } },
-  resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  },
+  capabilities = capabilities,
 }
 
-require("lspconfig").lua_ls.setup {
-  on_attach = M.on_attach,
-  capabilities = M.capabilities,
-
+lspconfig.pyright.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
   settings = {
-    Lua = {
-      diagnostics = {
-        globals = { "vim" },
-      },
-      workspace = {
-        library = {
-          [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-          [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-          [vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types"] = true,
-          [vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy"] = true,
-        },
-        maxPreload = 100000,
-        preloadFileSize = 10000,
+    pyright = {
+      -- Using Ruff's import organizer
+      disableOrganizeImports = true,
+    },
+    python = {
+      analysis = {
+        -- Ignore all files for analysis to exclusively use Ruff for linting
+        ignore = { "*" },
       },
     },
   },
 }
 
-return M
+-- npm install --save-dev @types/node; needed for eslint to work properly
+lspconfig.ts_ls.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+  init_options = {
+    preferences = {
+      disableSuggestions = false,
+    },
+  },
+}
+
+require("lspconfig").ruff.setup {
+  init_options = {
+    settings = {
+      logLevel = "debug",
+    },
+  },
+}
+
+require("conform").setup {
+  formatters_by_ft = {
+    lua = { "stylua" },
+    -- Conform will run multiple formatters sequentially
+    python = { "ruff_fix", "ruff_format" },
+    -- You can customize some of the format options for the filetype (:help conform.format)
+    rust = { "rustfmt", lsp_format = "fallback" },
+    -- Conform will run the first available formatter
+    javascript = { "prettierd", "prettier", stop_after_first = true },
+  },
+  format_on_save = {
+    -- These options will be passed to conform.format()
+    timeout_ms = 500,
+    lsp_format = "fallback",
+  },
+}
+require("dap-python").setup "python3"

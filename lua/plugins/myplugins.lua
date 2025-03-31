@@ -1,11 +1,10 @@
 local plugins = {
-
   {
     "mfussenegger/nvim-lint",
     event = "VeryLazy",
-    config = function ()
-      require "custom.configs.lint"
-    end
+    config = function()
+      require "configs.lint"
+    end,
   },
   {
     "christoomey/vim-tmux-navigator",
@@ -14,31 +13,32 @@ local plugins = {
   {
     "lervag/vimtex",
     lazy = false,
-     config = function()
-        vim.g.vimtex_view_method = 'zathura'
-      end,
-      ft = 'tex',
+    config = function()
+      vim.g.vimtex_view_method = "zathura"
+    end,
+    ft = "tex",
   },
   {
     "rcarriga/nvim-dap-ui",
     event = "VeryLazy",
     dependencies = "mfussenegger/nvim-dap",
-    config = function ()
-      local dap = require("dap")
-      local dapui = require("dapui")
+    config = function()
+      local dap = require "dap"
+      local dapui = require "dapui"
       dapui.setup()
-      dap.listeners.after.event_initialized["dapui_config"] = function ()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
-      dap.listeners.before.event_terminated["dapui_config"] = function ()
+      dap.listeners.before.event_terminated["dapui_config"] = function()
         dapui.close()
       end
-      dap.listeners.before.event_exited["dapui_config"] = function ()
+      dap.listeners.before.event_exited["dapui_config"] = function()
         dapui.close()
       end
-    end
+    end,
   },
   { "nvim-neotest/nvim-nio" },
+  { "mfussenegger/nvim-dap-python" },
   {
     "jay-babu/mason-nvim-dap.nvim",
     event = "VeryLazy",
@@ -50,27 +50,27 @@ local plugins = {
       handlers = {},
       ensure_installed = {
         "codelldb",
-      }
+      },
     },
   },
   {
     "mfussenegger/nvim-dap",
-    config = function(_,_)
-      require("core.utils").load_mappings("dap")
-    end
+    config = function(_, _)
+      --      require("nvconfig.utils").load_mappings "dap"
+    end,
   },
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     event = "VeryLazy",
-    opts = function ()
-      return require "custom.configs.null-ls"
+    opts = function()
+      return require "configs.null-ls"
     end,
   },
   {
     "neovim/nvim-lspconfig",
-    config = function ()
-        require "plugins.configs.lspconfig"
-        require "custom.configs.lspconfig"
+    config = function()
+      require "nvchad.configs.lspconfig"
+      require "configs.lspconfig"
     end,
   },
   {
@@ -84,28 +84,28 @@ local plugins = {
         "prettier",
         "pyright",
         "typescript-language-server",
-      }
-    }
+      },
+    },
   },
   {
     "NeogitOrg/neogit",
     dependencies = {
-      "nvim-lua/plenary.nvim",         -- required
-      "sindrets/diffview.nvim",        -- optional - Diff integration
+      "nvim-lua/plenary.nvim", -- required
+      "sindrets/diffview.nvim", -- optional - Diff integration
 
       -- Only one of these is needed.
       "nvim-telescope/telescope.nvim", -- optional
-      "ibhagwan/fzf-lua",              -- optional
-      "echasnovski/mini.pick",         -- optional
+      "ibhagwan/fzf-lua", -- optional
+      "echasnovski/mini.pick", -- optional
     },
-    config = true
+    config = true,
   },
   {
-    'stevearc/conform.nvim',
+    "stevearc/conform.nvim",
     opts = {},
   },
-  { "catppuccin/nvim", name = "catppuccin", priority = 1000 }
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+  { "akinsho/git-conflict.nvim", version = "v2.1.0", config = true },
 }
-
 
 return plugins
