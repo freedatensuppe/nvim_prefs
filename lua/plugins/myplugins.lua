@@ -38,6 +38,7 @@ local plugins = {
     end,
   },
   { "nvim-neotest/nvim-nio" },
+  { "mfussenegger/nvim-dap" },
   { "mfussenegger/nvim-dap-python" },
   {
     "jay-babu/mason-nvim-dap.nvim",
@@ -52,12 +53,6 @@ local plugins = {
         "codelldb",
       },
     },
-  },
-  {
-    "mfussenegger/nvim-dap",
-    config = function(_, _)
-      --      require("nvconfig.utils").load_mappings "dap"
-    end,
   },
   {
     "nvimtools/none-ls.nvim",
