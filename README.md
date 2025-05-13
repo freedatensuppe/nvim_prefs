@@ -1,9 +1,41 @@
-**This repo is supposed to used as config by NvChad users!**
+# Neovim preferences
 
-- The main nvchad repo (NvChad/NvChad) is used as a plugin by this repo.
-- So you just import its modules , like `require "nvchad.options" , require "nvchad.mappings"`
-- So you can delete the .git from this repo ( when you clone it locally ) or fork it :)
+based on [NvChad](https://github.com/NvChad/NvChad)
 
-# Credits
+Requirements:
 
-1) Lazyvim starter https://github.com/LazyVim/starter as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
+- neovim
+- git
+- clang
+- ttf-jetbrains-mono-nerd  
+- nodejs for LSP ([nvm](https://github.com/nvm-sh/nvm) is recommended)
+- ruff 
+
+can be installed with:
+
+``` 
+pacman -S  neovim, git, clang, ttf-jetbrains-mono-nerd, ruff, nodejs
+```
+
+or if you prefer nvm instead of nodejs:
+
+``` 
+yay -S nvm
+```
+
+## Installation
+
+First, check out the .config/nvim directory, make necessary backups, then execute
+
+```
+git clone https://github.com/freedatensuppe/nvim_prefs $HOME/.config/nvim 
+```
+
+start nvim and execute 
+
+```
+:Lazy 
+:MasonInstallAll
+```
+
+Neovim should be set up properly now.
