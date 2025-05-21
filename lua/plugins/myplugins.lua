@@ -95,10 +95,6 @@ local plugins = {
     },
     config = true,
   },
-  {
-    "stevearc/conform.nvim",
-    opts = {},
-  },
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   { "akinsho/git-conflict.nvim", version = "v2.1.0", config = true },
 }
