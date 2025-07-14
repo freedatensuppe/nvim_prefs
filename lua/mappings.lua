@@ -1,38 +1,30 @@
-require "nvchad.mappings"
-
--- add yours here
+require("nvchad.mappings")
 
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
+map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 map("i", "jk", "<ESC>")
+
+map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
+
+map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
+map("n", "<leader>dc", "<cmd> DapContinue <CR>")
+map("n", "<leader>do", "<cmd> DapStepOver <CR>")
+map("n", "<leader>di", "<cmd> DapStepInto <CR>")
+map("n", "<leader>dO", "<cmd> DapStepOut <CR>")
+map("n", "<leader>dq", "<cmd> DapTerminate <CR>")
 
 local M = {}
 
 M.general = {
 
-  n = {
-    ["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left"},
-    ["<C-l>"] = { "<cmd> TmuxNavigateRight<CR>", "window right"},
-    ["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down"},
-    ["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up"},
-  }
-}
-
-M.dap = {
-  plugin = true,
-  n = {
-    ["<leader>db"] = {
-      "<cmd> DapToggleBreakpoint <CR>",
-      "Add breakpoint at line",
-    },
-    ["<leader>dr"] = {
-      "<cmd> DapContinue <CR>",
-      "Start or contuinue the debugger",
-    }
-  }
+	n = {
+		["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left" },
+		["<C-l>"] = { "<cmd> TmuxNavigateRight<CR>", "window right" },
+		["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down" },
+		["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
+	},
 }
 
 return M
-
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
