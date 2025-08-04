@@ -83,6 +83,12 @@ local plugins = {
 	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 	{ "echasnovski/mini.icons", version = false },
 	{ "akinsho/git-conflict.nvim", version = "v2.1.0", config = true },
+	{
+		"chomosuke/typst-preview.nvim",
+		lazy = false, -- or ft = 'typst'
+		version = "1.*",
+		opts = {}, -- lazy.nvim will implicitly calls `setup {}`
+	},
 }
 
 return plugins
