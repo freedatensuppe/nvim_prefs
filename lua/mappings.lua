@@ -2,6 +2,15 @@ require("nvchad.mappings")
 
 local map = vim.keymap.set
 
+local function run_python_float_term()
+	local file = vim.fn.expand("%:p")
+	vim.cmd("write")
+	local cmd = { "bash", "-c", "python3 " .. file .. "; echo 'Press any key to exit...'; read -n 1 -s" }
+	require("lazy.util").float_term(cmd, {
+		cwd = vim.fn.getcwd(),
+	})
+end
+
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 map("i", "jk", "<ESC>")
@@ -23,6 +32,10 @@ end, { desc = " DapStepOver" })
 map("n", "<leader>di", "<cmd> DapStepInto <CR>")
 map("n", "<leader>dO", "<cmd> DapStepOut <CR>")
 map("n", "<leader>dq", "<cmd> DapTerminate <CR>")
+
+map("n", "<leader>q", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
+map("n", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
+map("i", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
 
 local M = {}
 
