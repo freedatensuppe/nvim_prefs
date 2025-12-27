@@ -37,16 +37,7 @@ map("n", "<leader>q", run_python_float_term, { noremap = true, silent = true, de
 map("n", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
 map("i", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
 
-local M = {}
-
-M.general = {
-
-	n = {
-		["<C-h>"] = { "<cmd> TmuxNavigateLeft<CR>", "window left" },
-		["<C-l>"] = { "<cmd> TmuxNavigateRight<CR>", "window right" },
-		["<C-j>"] = { "<cmd> TmuxNavigateDown<CR>", "window down" },
-		["<C-k>"] = { "<cmd> TmuxNavigateUp<CR>", "window up" },
-	},
-}
-
-return M
+-- Interactive Wezterm iPython
+map("n", "<leader>ip", "<cmd>WeztermIpythonToggle<cr>", { desc = "Toggle Wezterm iPython pane" })
+map({ "n", "i" }, "<S-CR>", "<cmd>WeztermIpythonSendLine<cr>", { desc = "Send Line to Wezterm iPython pane" })
+map("x", "<S-CR>", "<cmd>WeztermIpythonSendRange<cr>", { desc = "Send Selection to Wezterm iPython pane" })
