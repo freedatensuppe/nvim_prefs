@@ -33,6 +33,7 @@ else
 	dofile(vim.g.base46_cache .. "statusline")
 
 	require("options")
+	require("wezterm_interactive")
 	require("nvchad.autocmds")
 
 	vim.schedule(function()
