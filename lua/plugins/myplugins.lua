@@ -89,6 +89,25 @@ local plugins = {
 		version = "1.*",
 		opts = {}, -- lazy.nvim will implicitly calls `setup {}`
 	},
+	{
+		"jmbuhr/otter.nvim",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		ft = { "quarto", "qmd" }, -- Load for Quarto files
+	},
+	{
+		"quarto-dev/quarto-nvim",
+		dependencies = {
+			"jmbuhr/otter.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+
+		ft = { "quarto", "qmd", "rmd" }, -- Load for Quarto files
+		config = function()
+			require("configs.quarto")
+		end,
+	},
 }
 
 return plugins

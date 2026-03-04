@@ -28,12 +28,14 @@ map("n", "<leader>do", function()
 	vim.o.operatorfunc = "v:lua._operator_func"
 	vim.cmd.normal("g@l")
 end, { desc = " DapStepOver" })
+
 -- map("n", "<leader>do", "<cmd> DapStepOver <CR>")
+
 map("n", "<leader>di", "<cmd> DapStepInto <CR>")
 map("n", "<leader>dO", "<cmd> DapStepOut <CR>")
 map("n", "<leader>dq", "<cmd> DapTerminate <CR>")
 
-map("n", "<leader>q", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
+map("n", "<leader>qq", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
 map("n", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
 map("i", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = "Run current Python file" })
 
@@ -41,3 +43,11 @@ map("i", "<F5>", run_python_float_term, { noremap = true, silent = true, desc = 
 map("n", "<leader>ip", "<cmd>WeztermIpythonToggle<cr>", { desc = "Toggle Wezterm iPython pane" })
 map({ "n", "i" }, "<S-CR>", "<cmd>WeztermIpythonSendLine<cr>", { desc = "Send Line to Wezterm iPython pane" })
 map("x", "<S-CR>", "<cmd>WeztermIpythonSendRange<cr>", { desc = "Send Selection to Wezterm iPython pane" })
+
+-- Quarto Preview
+vim.keymap.set(
+	"n",
+	"<leader>qp",
+	require("configs.quarto").preview,
+	{ buffer = true, desc = "Quarto preview (horizontal split)" }
+)
