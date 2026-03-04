@@ -45,9 +45,4 @@ map({ "n", "i" }, "<S-CR>", "<cmd>WeztermIpythonSendLine<cr>", { desc = "Send Li
 map("x", "<S-CR>", "<cmd>WeztermIpythonSendRange<cr>", { desc = "Send Selection to Wezterm iPython pane" })
 
 -- Quarto Preview
-vim.keymap.set(
-	"n",
-	"<leader>qp",
-	require("configs.quarto").preview,
-	{ buffer = true, desc = "Quarto preview (horizontal split)" }
-)
+map("n", "<leader>qp", "<cmd>QuartoPreview2<cr>", { desc = "Quarto preview (horizontal split)" })

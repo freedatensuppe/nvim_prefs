@@ -21,85 +21,48 @@ require("quarto").setup({
 	},
 })
 
-local M = {}
-
-function M.preview()
+function QuartoPreview2()
 	local api = vim.api
-	local tools = require("quarto.tools")
 	local util = require("quarto.util")
 	require("quarto.config")
 
-	local opts = {}
-	local args = opts.args or ""
-	local buffer_path = api.nvim_buf_get_name(0)
-	local root_dir = util.root_pattern("_quarto.yml")(buffer_path)
+	local args, buf = "", api.nvim_get_current_buf()
+	local buffer_path = api.nvim_buf_get_name(buf)
+	local root = util.root_pattern("_quarto.yml")(buffer_path)
+
+	-- ensure it's a quarto file
+	local ext = buffer_path:match("%.[^.]+$") or ""
+	if not vim.tbl_contains({ ".qmd", ".Rmd", ".ipynb", ".md" }, ext) then
+		return vim.notify("Not a quarto file: " .. ext, vim.log.levels.WARN)
+	end
 
 	-- render-on-save check
-	local render_on_save = true
-	local lines
-	if root_dir then
-		lines = vim.fn.readfile(root_dir .. "/_quarto.yml")
-	else
-		lines = api.nvim_buf_get_lines(0, 0, 500, false)
-	end
-	for _, line in ipairs(lines) do
-		if line:find("render%-on%-save: false") then
-			render_on_save = false
+	local lines = root and vim.fn.readfile(root .. "/_quarto.yml") or api.nvim_buf_get_lines(buf, 0, 500, false)
+	local ros = true
+	for _, l in ipairs(lines) do
+		if l:find("render%-on%-save:%s*false") then
+			ros = false
 			break
 		end
 	end
-
-	if not render_on_save and not args:find("%-%-no%-watch%-inputs") then
+	if not ros and not args:find("%-%-no%-watch%-inputs") then
 		args = args .. " --no-watch-inputs"
 	end
 
-	local cmd = root_dir and ("quarto preview " .. vim.fn.shellescape(root_dir) .. " " .. args)
-		or ("quarto preview " .. vim.fn.shellescape(buffer_path) .. " " .. args)
+	local target = root and vim.fn.shellescape(root) or vim.fn.shellescape(buffer_path)
+	local cmd = "quarto preview " .. target .. " " .. args
 
-	local ext = buffer_path:match("^.+(%..+)$")
-	local quarto_exts = { ".qmd", ".Rmd", ".ipynb", ".md" }
-	if not ext or not vim.tbl_contains(quarto_exts, ext) then
-		vim.notify("Not a quarto file: " .. (ext or "none"), vim.log.levels.WARN)
-		return
-	end
+	-- open terminal split (unlisted, wipe on hide)
+	vim.cmd("botright 15split | enew")
+	local tbuf = api.nvim_get_current_buf()
+	vim.bo[tbuf].buflisted = false
+	vim.bo[tbuf].bufhidden = "wipe"
+	vim.bo[tbuf].swapfile = false
+	vim.bo[tbuf].scrollback = 100000 -- large scrollback for history
+	pcall(api.nvim_buf_set_name, tbuf, "[Quarto Preview]")
+	pcall(api.nvim_buf_set_var, tbuf, "quartoOutputBuf", true)
 
-	-- Try to find an existing preview terminal in this tab
-	local existing = nil
-	for _, win in ipairs(api.nvim_tabpage_list_wins(0)) do
-		local buf = api.nvim_win_get_buf(win)
-		local ok, mark = pcall(api.nvim_buf_get_var, buf, "quartoOutputBuf")
-		if ok and mark == true then
-			existing = { win = win, buf = buf }
-			break
-		end
-	end
-
-	-- Open or reuse a horizontal split at the bottom
-	if existing and api.nvim_buf_is_valid(existing.buf) then
-		api.nvim_set_current_win(existing.win)
-		api.nvim_set_current_buf(existing.buf)
-		-- Stop any existing running job (best-effort)
-		local job = vim.b.terminal_job_id
-		if job and job > 0 then
-			pcall(vim.fn.jobstop, job)
-		end
-	else
-		vim.cmd("botright 15split | enew")
-	end
-
-	local term_buf = api.nvim_get_current_buf()
-
-	-- Make the buffer hidden from buffer/tab bars and ephemeral
-	pcall(api.nvim_buf_set_name, term_buf, "[Quarto Preview]")
-	vim.bo[term_buf].buflisted = false
-	vim.bo[term_buf].bufhidden = "wipe"
-	vim.bo[term_buf].swapfile = false
-	vim.bo[term_buf].modifiable = true -- termopen will switch buftype to 'terminal'
-
-	-- Mark this buffer for reuse
-	pcall(api.nvim_buf_set_var, term_buf, "quartoOutputBuf", true)
-
-	-- Start/restart the terminal job
+	-- start the terminal job
 	vim.fn.termopen(cmd, {
 		on_exit = function(_, code)
 			if code ~= 0 then
@@ -108,25 +71,48 @@ function M.preview()
 		end,
 	})
 
-	-- Optional: enter insert mode for terminal
-	vim.cmd("startinsert")
+	-- helper: find window showing a given buffer
+	local function win_for_buf(bufnr)
+		for _, win in ipairs(api.nvim_list_wins()) do
+			if api.nvim_win_get_buf(win) == bufnr then
+				return win
+			end
+		end
+	end
 
-	-- Clean up terminal buffer when source buffer/window closes (if configured)
-	if QuartoConfig and QuartoConfig.closePreviewOnExit then
-		local group = api.nvim_create_augroup("quartoPreview", { clear = true })
-		api.nvim_create_autocmd({ "BufDelete", "WinClosed" }, {
-			buffer = 0,
-			group = group,
+	-- move focus to the terminal window, jump to bottom, and enter terminal mode
+	local term_win = win_for_buf(tbuf)
+	if term_win then
+		api.nvim_set_current_win(term_win)
+		vim.cmd("normal! G")
+		-- keep "follow" behavior when re-entering this terminal
+		local g = api.nvim_create_augroup("quartoPreviewTermFollow_" .. tbuf, { clear = true })
+		api.nvim_create_autocmd({ "BufEnter", "TermOpen" }, {
+			buffer = tbuf,
+			group = g,
 			callback = function()
-				if api.nvim_buf_is_loaded(term_buf) then
-					pcall(api.nvim_buf_delete, term_buf, { force = true })
+				-- jump to bottom and enter terminal-mode again
+				pcall(vim.cmd, "normal! G")
+				pcall(vim.cmd, "startinsert")
+			end,
+		})
+	end
+
+	if QuartoConfig and QuartoConfig.closePreviewOnExit then
+		local g = api.nvim_create_augroup("quartoPreview", { clear = true })
+		api.nvim_create_autocmd({ "BufDelete", "WinClosed" }, {
+			buffer = buf,
+			group = g,
+			callback = function()
+				if api.nvim_buf_is_loaded(tbuf) then
+					pcall(api.nvim_buf_delete, tbuf, { force = true })
 				end
 			end,
 		})
 	end
 
-	-- Return to previous window
+	-- return focus to previous window (optional)
 	vim.cmd("wincmd p")
 end
 
-return M
+vim.api.nvim_create_user_command("QuartoPreview2", QuartoPreview2, { desc = "Quarto with horizontal split" })
