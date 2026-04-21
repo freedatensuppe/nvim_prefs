@@ -27,31 +27,6 @@ local plugins = {
 			"mfussenegger/nvim-dap-python",
 			"theHamsta/nvim-dap-virtual-text",
 		},
-		config = function()
-			require("configs.nvim-dap")
-		end,
-	},
-	{
-		"jay-babu/mason-nvim-dap.nvim",
-		event = "VeryLazy",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"mfussenegger/nvim-dap",
-		},
-	},
-	{
-		"nvimtools/none-ls.nvim",
-		event = "VeryLazy",
-		opts = function()
-			return require("configs.null-ls")
-		end,
-	},
-	{
-		"neovim/nvim-lspconfig",
-		config = function()
-			require("nvchad.configs.lspconfig")
-			require("configs.lspconfig")
-		end,
 	},
 	{
 		"williamboman/mason.nvim",
@@ -66,6 +41,32 @@ local plugins = {
 				"typescript-language-server",
 			},
 		},
+	},
+	{
+		"jay-babu/mason-nvim-dap.nvim",
+		event = "VeryLazy",
+		dependencies = {
+			"williamboman/mason.nvim",
+			"mfussenegger/nvim-dap",
+		},
+
+		config = function()
+			require("configs.mason-nvim-dap")
+		end,
+	},
+	{
+		"nvimtools/none-ls.nvim",
+		event = "VeryLazy",
+		opts = function()
+			return require("configs.null-ls")
+		end,
+	},
+	{
+		"neovim/nvim-lspconfig",
+		config = function()
+			require("nvchad.configs.lspconfig")
+			require("configs.lspconfig")
+		end,
 	},
 	{
 		"NeogitOrg/neogit",
