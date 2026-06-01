@@ -29,11 +29,10 @@ dap.configurations = {
 				-- debugpy supports launching an application with a different interpreter then the one used to launch debugpy itself.
 				-- The code below looks for a `venv` or `.venv` folder in the current directly and uses the python within.
 				-- You could adapt this - to for example use the `VIRTUAL_ENV` environment variable.
-				local cwd = vim.fn.getcwd()
-				if vim.fn.executable(cwd .. "/venv/bin/python") == 1 then
-					return cwd .. "/venv/bin/python"
-				elseif vim.fn.executable(cwd .. "/.venv/bin/python") == 1 then
-					return cwd .. "/.venv/bin/python"
+				-- Use VIRTUAL_ENV environment variable if set
+				local venv = os.getenv("VIRTUAL_ENV")
+				if venv then
+					return venv .. "/bin/python"
 				else
 					return "/usr/bin/python"
 				end
@@ -42,7 +41,30 @@ dap.configurations = {
 	},
 }
 
-ui.setup()
+local dapui_opts = {
+	layouts = {
+		{
+			elements = {
+				{ id = "console", size = 0.5 },
+				{ id = "repl", size = 0.5 },
+			},
+			position = "left",
+			size = 50,
+		},
+		{
+			elements = {
+				{ id = "scopes", size = 0.50 },
+				{ id = "breakpoints", size = 0.20 },
+				{ id = "stacks", size = 0.15 },
+				{ id = "watches", size = 0.15 },
+			},
+			position = "bottom",
+			size = 15,
+		},
+	},
+}
+
+ui.setup(dapui_opts)
 
 vim.fn.sign_define("DapBreakpoint", { text = "🐞" })
 

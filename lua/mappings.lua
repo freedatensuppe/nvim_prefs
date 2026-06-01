@@ -5,7 +5,7 @@ local map = vim.keymap.set
 local function run_python_float_term()
 	local file = vim.fn.expand("%:p")
 	vim.cmd("write")
-	local cmd = { "bash", "-c", "python3 " .. file .. "; echo 'Press any key to exit...'; read -n 1 -s" }
+	local cmd = { "bash", "-c", "uv run " .. file .. "; echo 'Press any key to exit...'; read -n 1 -s" }
 	require("lazy.util").float_term(cmd, {
 		cwd = vim.fn.getcwd(),
 	})
