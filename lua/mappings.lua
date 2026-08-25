@@ -14,6 +14,7 @@ end
 map("n", ";", ":", { desc = "CMD enter command mode" })
 map("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>")
 map("i", "jk", "<ESC>")
+map("i", "jj", "<ESC>")
 
 map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
 map("n", "<leader>db", "<cmd> DapToggleBreakpoint <CR>")
@@ -46,3 +47,16 @@ map("x", "<S-CR>", "<cmd>WeztermIpythonSendRange<cr>", { desc = "Send Selection 
 
 -- Quarto Preview
 map("n", "<leader>qp", "<cmd>QuartoPreview2<cr>", { desc = "Quarto preview (horizontal split)" })
+
+-- Resize windows
+map("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
+map("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
+map("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
+map("n", "_", [[<cmd>horizontal resize -2<cr>]]) -- make the window smaller horizontally by pressing shift and -
+
+map("t", "<Esc>", "<C-\\><C-N>", { desc = "terminal escape terminal mode" })
+
+map("t", "<C-h>", "<C-\\><C-N><C-w>h", { desc = "terminal escape terminal mode" })
+map("t", "<C-l>", "<C-\\><C-N><C-w>l", { desc = "terminal escape terminal mode" })
+map("t", "<C-j>", "<C-\\><C-N><C-w>j", { desc = "terminal escape terminal mode" })
+map("t", "<C-k>", "<C-\\><C-N><C-w>k", { desc = "terminal escape terminal mode" })

@@ -49,7 +49,7 @@ local dapui_opts = {
 				{ id = "repl", size = 0.5 },
 			},
 			position = "left",
-			size = 50,
+			size = 60,
 		},
 		{
 			elements = {
@@ -59,7 +59,7 @@ local dapui_opts = {
 				{ id = "watches", size = 0.15 },
 			},
 			position = "bottom",
-			size = 15,
+			size = 25,
 		},
 	},
 }
