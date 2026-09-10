@@ -109,6 +109,18 @@ local plugins = {
 			require("configs.quarto")
 		end,
 	},
+
+	-- install markdown-preview.nvim without yarn or npm
+	-- see: https://github.com/iamcco/markdown-preview.nvim/issues/690
+	{
+		"iamcco/markdown-preview.nvim",
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		ft = { "markdown" },
+		build = function()
+			vim.cmd([[Lazy load markdown-preview.nvim]])
+			vim.fn["mkdp#util#install"]()
+		end,
+	},
 }
 
 return plugins

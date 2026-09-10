@@ -49,8 +49,8 @@ function QuartoPreview2()
 		args = args .. " --no-watch-inputs"
 	end
 
-	local target = root and vim.fn.shellescape(root) or vim.fn.shellescape(buffer_path)
-	local cmd = "quarto preview " .. target .. " " .. args
+	local target = vim.fn.shellescape(buffer_path) -- or root and vim.fn.shellescape(root)
+	local cmd = "uv run quarto preview " .. target .. " " .. args
 
 	-- open terminal split (unlisted, wipe on hide)
 	vim.cmd("botright 15split | enew")

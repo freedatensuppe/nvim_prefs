@@ -45,10 +45,12 @@ map("n", "<leader>ip", "<cmd>WeztermIpythonToggle<cr>", { desc = "Toggle Wezterm
 map({ "n", "i" }, "<S-CR>", "<cmd>WeztermIpythonSendLine<cr>", { desc = "Send Line to Wezterm iPython pane" })
 map("x", "<S-CR>", "<cmd>WeztermIpythonSendRange<cr>", { desc = "Send Selection to Wezterm iPython pane" })
 
--- Quarto Preview
+-- Typst/Quarto/Markdown Preview
+map("n", "<leader>tp", "<cmd>TypstPreview<cr>", { desc = "Typst preview" })
 map("n", "<leader>qp", "<cmd>QuartoPreview2<cr>", { desc = "Quarto preview (horizontal split)" })
-
+map("n", "<leader>mp", "<cmd>MarkdownPreview<cr>", { desc = "Markdown preview" })
 -- Resize windows
+--
 map("n", "=", [[<cmd>vertical resize +5<cr>]]) -- make the window biger vertically
 map("n", "-", [[<cmd>vertical resize -5<cr>]]) -- make the window smaller vertically
 map("n", "+", [[<cmd>horizontal resize +2<cr>]]) -- make the window bigger horizontally by pressing shift and =
